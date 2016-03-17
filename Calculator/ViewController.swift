@@ -43,7 +43,7 @@ class ViewController: UIViewController {
     
     @IBAction func operatorButtonClicked(sender: UIButton) {
         if hasOperator {
-            self.core.popPreviousSteps()
+            self.core.popPreviousStep()
         }
         else {
             try! self.core.addStep(self.displayLabel.floatValue)

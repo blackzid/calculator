@@ -46,7 +46,7 @@ public struct Core<ValueType: IntegerLiteralConvertible> {
         self.steps.append(.Operand(operand))
     }
     
-    public mutating func popPreviousSteps() {
+    public mutating func popPreviousStep() {
         self.steps.popLast()
     }
     
