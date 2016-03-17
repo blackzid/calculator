@@ -21,6 +21,8 @@ class ViewController: UIViewController {
         self.resetCore()
     }
     
+    var hasOperator: Bool = false
+    
     @IBOutlet weak var displayLabel: DisplayLabel!
 
     @IBAction func numericButtonClicked(sender: UIButton) {
@@ -30,15 +32,22 @@ class ViewController: UIViewController {
             self.displayLabel.append(0)
             self.displayLabel.append(0)
         }
+        hasOperator = false
     }
 
     @IBAction func negativeButtonClicked(sender: UIButton) {
         self.displayLabel.changeSign()
     }
 
+    
+    
     @IBAction func operatorButtonClicked(sender: UIButton) {
-        try! self.core.addStep(self.displayLabel.floatValue)
-
+        if hasOperator {
+            self.core.popPreviousSteps()
+        }
+        else {
+            try! self.core.addStep(self.displayLabel.floatValue)
+        }
         switch (sender.titleForState(.Normal)!) {
         case "+":
             try! self.core.addStep(+)
@@ -51,7 +60,7 @@ class ViewController: UIViewController {
         default:
             break
         }
-        
+        hasOperator = true
         self.displayLabel.clear()
     }
     
@@ -80,6 +89,7 @@ class ViewController: UIViewController {
     
     @IBAction func calculateButtonClicked(sender: UIButton) {
         clearHighlightButton()
+        hasOperator = false
         try! self.core.addStep(self.displayLabel.floatValue)
         self.displayLabel.floatValue = try! self.core.calculate()
         self.resetCore()

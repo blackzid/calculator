@@ -45,7 +45,11 @@ public struct Core<ValueType: IntegerLiteralConvertible> {
         }
         self.steps.append(.Operand(operand))
     }
-
+    
+    public mutating func popPreviousSteps() {
+        self.steps.popLast()
+    }
+    
     public mutating func addStep(operation: Step<ValueType>.OperatorType) throws {
         guard case .Operand? = self.steps.last else {
             throw CoreError.StepOrderInconsistency
