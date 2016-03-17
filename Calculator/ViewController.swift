@@ -44,20 +44,49 @@ class ViewController: UIViewController {
             try! self.core.addStep(+)
         case "-":
             try! self.core.addStep(-)
+        case "×":
+            try! self.core.addStep(*)
+        case "÷":
+            try! self.core.addStep(/)
         default:
             break
         }
-
+        
         self.displayLabel.clear()
     }
-
+    
+    @IBAction func dotButtonClicked(sender: UIButton) {
+        self.displayLabel.appendDot()
+    }
+    
+    var highlightButton: UIButton?
+    
+    @IBAction func highlightButton(sender: UIButton) {
+        clearHighlightButton()
+        highlightButton = sender
+        highlightButton!.layer.borderColor = UIColor.blackColor().CGColor
+        highlightButton!.layer.borderWidth = 2.0
+    }
+    
+    func clearHighlightButton() {
+        if highlightButton != nil {
+            highlightButton!.layer.borderWidth = 0
+        }
+    }
+    
+    @IBAction func percentageButtonClicked(sender: UIButton) {
+        self.displayLabel.floatValue = self.displayLabel.floatValue / 100.0
+    }
+    
     @IBAction func calculateButtonClicked(sender: UIButton) {
+        clearHighlightButton()
         try! self.core.addStep(self.displayLabel.floatValue)
         self.displayLabel.floatValue = try! self.core.calculate()
         self.resetCore()
     }
 
     @IBAction func resetButtonClicked(sender: UIButton) {
+        clearHighlightButton()
         self.resetCore()
         self.displayLabel.clear()
     }

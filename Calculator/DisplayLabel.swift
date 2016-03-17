@@ -38,7 +38,13 @@ class DisplayLabel: UILabel {
     }
 
     // MARK: - Negative
-
+    func appendDot() {
+        
+        if let text = self.text where !text.containsString(".") {
+            self.text = text + "."
+        }
+        
+    }
     var negative: Bool {
         if let text = self.text {
             return text.hasPrefix("-")
